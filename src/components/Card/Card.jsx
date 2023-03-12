@@ -1,10 +1,18 @@
 import './index.css';
-import save from './save.svg';
-import cn from 'classnames'
+import cn from 'classnames';
+import { ReactComponent as Save } from './save.svg';
+import { isLiked, calcDiscountPrice } from '../../utils/products'
 
 
-function Card({ name, price, discount, wight, picture, isFavorite, isCart, available, description, tags }) {
-    const discountPrice = Math.round(price - price * discount / 100);
+function Card({ name, price, discount, wight, pictures, available, description, tags, currentUser, onProductLike, likes, _id }) {
+    const discountPrice = calcDiscountPrice(price, discount);
+    const liked = isLiked(likes, currentUser?._id);
+
+    const handleLikeClick = () => {
+        console.log('click');
+        onProductLike({_id, likes})
+    }
+
     return (
         <div className='card'>
             <div className="card__sticky card__sticky_type_top-left">
@@ -16,12 +24,14 @@ function Card({ name, price, discount, wight, picture, isFavorite, isCart, avail
                 })}>{tag}</span>)}
             </div>
             <div className='card__sticky card__sticky_type_top-right'>
-                <button className='card__favorite'>
-                    <img src={save} alt="Добавить в избранное" className='card__favorite-icon'/>
+                <button className={cn('card__favorite', {
+                    'card__favorite_is-active': liked
+                })} onClick={handleLikeClick}>
+                    <Save className='card__favorite-icon' />
                 </button>
             </div>
             <a href="#" className='card__link'>
-                <img src={picture} className='card__image' alt={description} />
+                <img src={pictures} className='card__image' alt={description} />
                 <div className="card__desc">
                     <span className={discount !== 0 ? 'card__old-price' : 'card__price'}>{price}</span>
                     {discount !== 0 && <span className="card__price card__price_type_discount">{discountPrice}&nbsp;₽</span>}
