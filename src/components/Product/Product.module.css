@@ -180,11 +180,6 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 20px;
-    cursor: pointer;
-}
-
-.favorite:hover {
-    opacity: 0.6;
 }
 
 .favorite svg {
@@ -193,6 +188,27 @@
 
 .favoriteActive svg {
     fill: #dc0404;
+}
+
+.btn {
+    padding: 10px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 20px;
+    border-radius: 55px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color .3s;
+    color: black;
+}
+
+.btn_type_primary {
+    background-color: #FFE44D;
+}
+
+.btn_type_primary:hover {
+    background-color: #FFAA0D;
+    color: #F44336;
 }
 
 @media (max-width: 1000px) {

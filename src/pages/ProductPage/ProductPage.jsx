@@ -10,9 +10,6 @@ import Footer from '../../components/Footer/Footer';
 import Product from '../../components/Product/Product';
 
 
-
-
-
 const ProductPage = () => {
     const [product, setProduct] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
@@ -21,10 +18,10 @@ const ProductPage = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        Promise.all([api.getUserInfo(), api.getProductById( '64085a894ee419975fbd2eea' )])
-            .then(([userData, cardData]) => {
+        Promise.all([api.getUserInfo(), api.getProductById( '622c77e877d63f6e70967d22' )])
+            .then(([userData, productData]) => {
                 setCurrentUser(userData);
-                setCards(cardData.products);
+                setProduct(productData);
             })
             .catch(err => console.error(err))
             .finally(() => {
@@ -34,19 +31,19 @@ const ProductPage = () => {
 
     const handleRequest = () => {
         api.search(searchQuery).then(data => {
-            setCards(data);
+            setProduct(data);
         }).catch(err => console.error(err));
     }
 
-    const handleProductLike = (product) => {
+    const handleProductLike = () => {
         const liked = isLiked(product.likes, currentUser._id); //ищем в массиве лайков айди текущего пользователя
         api.changeLikeProduct(product._id, liked).then((newCard) => { //В зависимости от наличия лайка отправляем завпрос 'DELETE' или 'PUT'
-            const newCards = cards.map((card) => {
+            const newCards = product.map((card) => {
                 // console.log('Карточка в переборе', card);
                 // console.log('Карточка с сервера', newCard);
                 return card._id === newCard._id ? newCard : card;
             })
-            setCards(newCards);
+            setProduct(newCards);
         })
     }
 
@@ -62,7 +59,7 @@ const ProductPage = () => {
                         <Spinner />
                     </div>
                 ) : (
-                        <Product onProductLike={handleProductLike} />
+                        <Product {...product} currentUser={currentUser} onProductLike={handleProductLike} />
                 )}
 
             </main>
