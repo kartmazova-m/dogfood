@@ -9,7 +9,6 @@ import Spinner from '../../components/Spinner/Spinner';
 import Footer from '../../components/Footer/Footer';
 import Product from '../../components/Product/Product';
 
-
 const ProductPage = () => {
     const [product, setProduct] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
@@ -39,8 +38,6 @@ const ProductPage = () => {
         const liked = isLiked(product.likes, currentUser._id); //ищем в массиве лайков айди текущего пользователя
         api.changeLikeProduct(product._id, liked).then((newCard) => { //В зависимости от наличия лайка отправляем завпрос 'DELETE' или 'PUT'
             const newCards = product.map((card) => {
-                // console.log('Карточка в переборе', card);
-                // console.log('Карточка с сервера', newCard);
                 return card._id === newCard._id ? newCard : card;
             })
             setProduct(newCards);

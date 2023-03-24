@@ -3,7 +3,7 @@ import cn from 'classnames'
 
  const Header = ({user, updateUserHandle, children}) => {
     console.log('user---> ', user);
-    // const handleClickButtonEdit = (e) => {
+    // const handleClickEdit = (e) => {
     //     e.preventDefault();
     //     updateUserHandle({name: "Маргарита Картмазова", about: 'Студент'})
     // }
@@ -12,7 +12,7 @@ import cn from 'classnames'
             <div className="container">
                 {/* {user?.email && <span>{user?.email}</span>}
                 {user?.name && <span>{user?.name}</span>} */}
-                {/* <button onClick={handleClickButtonEdit}>Изменить</button> */}
+                {/* < onClick={handleClickEdit}>Изменить</> */}
                 <div className={s.wrapper}>
                     {children}
                 </div>

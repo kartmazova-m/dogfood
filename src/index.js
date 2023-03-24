@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import ProductPage from './pages/ProductPage/ProductPage';
+import App from './components/App/App'
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<ProductPage />  );
+root.render(<App />  );
 
 

@@ -34,7 +34,6 @@ function App() {
 
   const handleRequest = () => {
     setIsLoading(true);
-    // const filterCards = data.filter(item => item.name.toUpperCase().includes(searchQuery.toUpperCase()))
     api.search(debounceSearchQuery).then(data => {
       setCards(data);
     }).catch(err => console.error(err))
@@ -65,11 +64,9 @@ function App() {
   }
 
   const handleProductLike = (product) => {
-    const liked = isLiked(product.likes, currentUser._id); //ищем в массиве лайков айди текущего пользователя
-    api.changeLikeProduct(product._id, liked).then((newCard) => { //В зависимости от наличия лайка отправляем завпрос 'DELETE' или 'PUT'
+    const liked = isLiked(product.likes, currentUser._id); 
+    api.changeLikeProduct(product._id, liked).then((newCard) => {
       const newCards = cards.map((card) => {
-        // console.log('Карточка в переборе', card);
-        // console.log('Карточка с сервера', newCard);
         return card._id === newCard._id ? newCard : card;
       })
       setCards(newCards);
@@ -85,7 +82,7 @@ function App() {
       </Header>
       <main className='content container'>
         <SearchInfo searchText={searchQuery} searchCount={cards.length} />
-        {!isLoading ? (
+        {isLoading ? (
           <Spinner />
         ) : (
             <CardList goods={cards} onProductLike={handleProductLike} currentUser={currentUser} />
