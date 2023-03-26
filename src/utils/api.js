@@ -58,3 +58,4 @@ const config = {
 const api = new Api(config);
 
 export default api;
+
