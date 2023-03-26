@@ -4,7 +4,7 @@ import NotFound from "../../components/NotFound/NotFound";
 const NotFoundPage = () => {
   return (
     <NotFound
-      title="Простите, по вашему запросу постов не надено." buttonText="На главную" href="/"
+      title="Простите, по вашему запросу товаров не надено." buttonText="На главную" href="/"
     />
   );
 };
