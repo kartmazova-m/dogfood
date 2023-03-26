@@ -10,15 +10,15 @@ import NotFoundPage from "../NotFoundPage/NotFoundPage";
 const ProductPage = ({ currentUser }) => {
   const [product, setProduct] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const { productId } = useParams();
 
   useEffect(() => {
     setIsLoading(true);
     api
       .getProductById(productId)
-      .then(([productData]) => {
+      .then((productData) => {
         setProduct(productData);
       })
       .catch((err) => {

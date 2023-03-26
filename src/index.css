@@ -39,3 +39,7 @@ img {
   flex-direction: column;
   min-height: 100vh;
 }
+
+:root {
+  --text-default-color: #1A1A1A;
+}
