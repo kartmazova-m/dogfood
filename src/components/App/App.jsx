@@ -1,4 +1,3 @@
-import s from "./App.module.css";
 import Header from "../Header/Header";
 import { useEffect, useState } from "react";
 import Logo from "../Logo/Logo";
@@ -10,7 +9,10 @@ import useDebounce from "../../hooks/useDebounce";
 import { isLiked } from "../../utils/products";
 import { Route, Routes } from "react-router-dom";
 import CatalogPage from "../../pages/CatalogPage/CatalogPage";
-import ProductPage from '../../pages/ProductPage/ProductPage'
+import ProductPage from "../../pages/ProductPage/ProductPage";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import { UserContext } from "../../context/userContext";
+import { CardContext } from "../../context/cardContext";
 
 function App() {
   const [cards, setCards] = useState([]);
@@ -75,37 +77,36 @@ function App() {
     });
   };
 
-  console.log("cards --->", cards)
 
   return (
-    <>
-      <Header user={currentUser} updateUserHandle={handleUpdateUser}>
-        <Logo className={"logo logo_place_header"} href="/" />
-        <Search onInput={handleInputChange} onSubmit={handleFormSubmit} />
-      </Header>
-      <main className="content container">
-        <SearchInfo searchText={searchQuery} searchCount={cards.length} />
-        <Routes>
-          <Route
-            index
-            element={
-              <CatalogPage
-                isLoading={isLoading}
-                handleProductLike={handleProductLike}
-                currentUser={currentUser}
-                cards={cards}
-              />
-            }
-          />
-          <Route
-            path="/product/:productId"
-            element={<ProductPage currentUser={currentUser} />}
-          />
-        </Routes>
-      </main>
+    <UserContext.Provider value={{ user: currentUser, isLoading }}>
+      <CardContext.Provider value={{ cards, handleLike: handleProductLike }}>
+        <Header user={currentUser} updateUserHandle={handleUpdateUser}>
+          <Logo className={"logo logo_place_header"} href="/" />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Search
+                  onInput={handleInputChange}
+                  onSubmit={handleFormSubmit}
+                />
+              }
+            />
+          </Routes>
+        </Header>
+        <main className="content container">
+          <SearchInfo searchText={searchQuery} searchCount={cards.length} />
+          <Routes>
+            <Route index element={<CatalogPage />} />
+            <Route path="/product/:productId" element={<ProductPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
 
-      <Footer />
-    </>
+        <Footer />
+      </CardContext.Provider>
+    </UserContext.Provider>
   );
 }
 

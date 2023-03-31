@@ -1,18 +1,20 @@
 import s from "../../components/Product/Product.module.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { isLiked } from "../../utils/products";
 import api from "../../utils/api";
 import Spinner from "../../components/Spinner/Spinner";
 import Product from "../../components/Product/Product";
 import { useParams } from "react-router-dom";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
+import { UserContext } from "../../context/userContext";
 
-const ProductPage = ({ currentUser }) => {
+const ProductPage = () => {
   const [product, setProduct] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const { productId } = useParams();
+  const {user: currentUser} = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -41,12 +43,8 @@ const ProductPage = ({ currentUser }) => {
 
   const handleProductLike = () => {
     const liked = isLiked(product.likes, currentUser._id); //ищем в массиве лайков айди текущего пользователя
-    api.changeLikeProduct(product._id, liked).then((newCard) => {
-      //В зависимости от наличия лайка отправляем завпрос 'DELETE' или 'PUT'
-      const newCards = product.map((card) => {
-        return card._id === newCard._id ? newCard : card;
-      });
-      setProduct(newCards);
+    api.changeLikeProduct(product._id, liked).then((updateCard) => {
+      setProduct(updateCard);
     });
   };
 

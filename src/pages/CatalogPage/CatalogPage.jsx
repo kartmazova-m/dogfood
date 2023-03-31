@@ -1,22 +1,15 @@
 import React from "react";
-import Spinner from "../../components/Spinner/Spinner";
 import CardList from "../../components/CardList/CardList";
+import Sort from "../../components/Sort/Sort";
 
 
-const CatalogPage = ({ isLoading, cards, handleProductLike, currentUser }) => {
+const CatalogPage = () => {
   return (
     <>
-      {isLoading ? (
-        <Spinner />
-      ) : (
-        <CardList
-          goods={cards}
-          onProductLike={handleProductLike}
-          currentUser={currentUser}
-        />
-      )}
+      <Sort />
+      <CardList />
     </>
   );
 };
 
-export default CatalogPage;;
+export default CatalogPage;
