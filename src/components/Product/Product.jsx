@@ -5,15 +5,18 @@ import { ReactComponent as Save } from './image/save.svg';
 import truck from './image/truck.svg';
 import quality from './image/quality.svg';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../context/userContext';
 
 
-const Product = ({ currentUser, _id, onProductLike, available, description, discount, price, name, pictures, likes }) => {
+const Product = ({ _id, onProductLike, available, description, discount, price, name, pictures, likes }) => {
     const navigate = useNavigate();
-
-
+    const { user: currentUser } = useContext(UserContext);
     const discountPrice = calcDiscountPrice(price, discount);
     const liked = isLiked(likes, currentUser?._id);
     const descriptionHtml = createMarkup(description);
+
+
     return (
         <>
             <div>

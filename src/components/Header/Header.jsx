@@ -1,24 +1,31 @@
+import { Link } from "react-router-dom";
 import s from "./Header.module.css";
-import cn from 'classnames'
+import cn from 'classnames';
+import { ReactComponent as FavouriteIcon } from './img/favorites.svg';
+import { useContext } from "react";
+import { CardContext } from "../../context/cardContext";
 
- const Header = ({user, updateUserHandle, children}) => {
-    console.log('user---> ', user);
-    // const handleClickEdit = (e) => {
-    //     e.preventDefault();
-    //     updateUserHandle({name: "Маргарита Картмазова", about: 'Студент'})
-    // }
+ const Header = ({ children}) => {
+    const { favourites } = useContext(CardContext);
+
     return (
-        <header className={cn(s.header, 'js-click')}>
-            <div className="container">
-                {/* {user?.email && <span>{user?.email}</span>}
-                {user?.name && <span>{user?.name}</span>} */}
-                {/* < onClick={handleClickEdit}>Изменить</> */}
-                <div className={s.wrapper}>
-                    {children}
-                </div>
+      <header className={cn(s.header, "cover")}>
+        <div className="container">
+          <div className={s.wrapper}>
+            {children}
+            <div className={s.iconsMenu}>
+              <Link
+                className={s.favouritesLink}
+                to={{ pathname: "/favourites" }}
+              >
+                <FavouriteIcon />
+                {favourites?.length !== 0 && <span className={s.iconBubble}>{favourites?.length}</span>}
+              </Link>
             </div>
-        </header>
-    )
+          </div>
+        </div>
+      </header>
+    );
  };
 
  export default Header;
